@@ -14,6 +14,10 @@ type SelectProps = {
 
 export function Select({ value, onChange, options }: SelectProps) {
   const [isOpen, setisOpen] = useState(false);
+
+  function clearOptions() {
+    onChange(undefined);
+  }
   return (
     <div
       onBlur={() => setisOpen(false)}
@@ -22,7 +26,15 @@ export function Select({ value, onChange, options }: SelectProps) {
       className={styles.container}
     >
       <span className={styles.value}>{value?.label}</span>
-      <button className={styles["clear-btn"]}>&times;</button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          clearOptions();
+        }}
+        className={styles["clear-btn"]}
+      >
+        &times;
+      </button>
       <div className={styles.divider}></div>
       <div className={styles.caret}></div>
       <ul className={`${styles.options} ${isOpen ? styles.show : ""}`}>
